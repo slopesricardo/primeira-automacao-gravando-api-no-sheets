@@ -29,8 +29,7 @@ Os workflows neste repositório requerem que você configure suas próprias cred
     >
     > -   **`Client ID`**: Cole o seu "ID do cliente" OAuth 2.0 neste campo.
     > -   **`Client Secret`**: Cole o seu "Segredo do cliente" OAuth 2.0 neste campo.
-    >
-    > ![Exemplo da tela de credenciais do N8N](https://i.imgur.com/K1U1u2B.png)
+    
 
 6.  **Importante**: A tela de credenciais do n8n mostrará uma **"OAuth Redirect URL"**. Você deve copiar esta URL e adicioná-la na seção "URIs de redirecionamento autorizados" da sua credencial OAuth 2.0 no Google Cloud Console para que a autenticação funcione.
 7.  Clique em **"Sign in with Google"** e siga o processo para conectar sua conta.
