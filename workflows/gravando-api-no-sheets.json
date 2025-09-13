@@ -1,0 +1,218 @@
+{
+  "name": "gravando-api-no-sheets",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        -16
+      ],
+      "id": "47f1d7e5-012f-4125-b1f5-0facb8e4bb45",
+      "name": "Clique para Iniciar"
+    },
+    {
+      "parameters": {
+        "url": "https://stephen-king-api.onrender.com/api/book/21",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -144,
+        -16
+      ],
+      "id": "defd2b52-a568-411a-9c2d-02f533e7647f",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1ba518fe-3088-41e7-9dd6-c4dd9595ea99",
+              "name": "data.Titulo",
+              "value": "={{ $json.data.Title }}",
+              "type": "string"
+            },
+            {
+              "id": "672a2095-2907-4f44-b89d-d2b0874ff2cd",
+              "name": "data.Data",
+              "value": "={{ $json.data.Year }}",
+              "type": "number"
+            },
+            {
+              "id": "871f8950-42fd-46da-9d42-7e0846b6397a",
+              "name": "data.Editora",
+              "value": "={{ $json.data.Publisher }}",
+              "type": "string"
+            },
+            {
+              "id": "9ffcbf1f-02e1-4f78-ac3d-e3cc28ceb422",
+              "name": "data.ISBN",
+              "value": "={{ $json.data.ISBN }}",
+              "type": "string"
+            },
+            {
+              "id": "e3ffcf17-2e7a-478c-b22b-86ceba861761",
+              "name": "data.Páginas",
+              "value": "={{ $json.data.Pages }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        64,
+        -16
+      ],
+      "id": "b5be6b31-aaca-40d7-ae9e-53c28695314b",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1rpZkifsiRrHUsUicZhfoI5eXvO0chfhLjzdGWgW76vQ",
+          "mode": "list",
+          "cachedResultName": "Dados do Livros",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1rpZkifsiRrHUsUicZhfoI5eXvO0chfhLjzdGWgW76vQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1rpZkifsiRrHUsUicZhfoI5eXvO0chfhLjzdGWgW76vQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Titulo": "={{ $json.data.Titulo }}",
+            "Data": "={{ $json.data.Data }}",
+            "Editora": "={{ $json.data.Editora }}",
+            "ISBN": "={{ $json.data.ISBN }}",
+            "Páginas": "={{ $json.data['Páginas'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Titulo",
+              "displayName": "Titulo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Data",
+              "displayName": "Data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Editora",
+              "displayName": "Editora",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ISBN",
+              "displayName": "ISBN",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Páginas",
+              "displayName": "Páginas",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        272,
+        -16
+      ],
+      "id": "ad1fd2a9-556b-4f6b-a6ea-33911de9826a",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OgwYcwqnO5bV2KaR",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Clique para Iniciar": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ad3e25c9-fb87-47a2-ab17-8f60c1f92c95",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0e179f65d867dc3c32e0f2982180e8e97664db43e0cbf8d57548f7263885230d"
+  },
+  "id": "QK4ny74XZgmnBfEL",
+  "tags": []
+}
